@@ -1,0 +1,1243 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Kajal | Data Analyst Portfolio</title>
+<meta name="description" content="Kajal — Aspiring Data Analyst skilled in Python, SQL, Excel, Power BI."/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+<style>
+/* ═══════════════════════════════════════
+   THEME VARIABLES
+═══════════════════════════════════════ */
+[data-theme="dark"]{
+  --bg:#080810; --surface:#0f0f1a; --card:#161622; --card2:#1c1c2e;
+  --accent:#e8c547; --accent2:#7c6fff; --accent3:#50fa7b; --accent4:#f87171;
+  --text:#eeeae4; --muted:#8a8799; --text-inv:#080810;
+  --border:rgba(255,255,255,0.07); --border-y:rgba(232,197,71,0.22);
+  --nav-bg:rgba(8,8,16,0.92); --shadow:rgba(0,0,0,0.5);
+  --input-bg:#161622; --modal-overlay:rgba(8,8,16,0.9);
+}
+[data-theme="light"]{
+  --bg:#f8f7f2; --surface:#eeeae4; --card:#ffffff; --card2:#f0ede8;
+  --accent:#c9960a; --accent2:#5b52e0; --accent3:#16a34a; --accent4:#dc2626;
+  --text:#1a1a2e; --muted:#64607a; --text-inv:#ffffff;
+  --border:rgba(0,0,0,0.08); --border-y:rgba(201,150,10,0.3);
+  --nav-bg:rgba(248,247,242,0.92); --shadow:rgba(0,0,0,0.12);
+  --input-bg:#ffffff; --modal-overlay:rgba(26,26,46,0.85);
+}
+
+/* ═══════════════════════════════════════
+   RESET & BASE
+═══════════════════════════════════════ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;font-size:16px;}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-weight:300;overflow-x:hidden;line-height:1.6;transition:background .4s,color .4s;}
+
+/* ═══════════════════════════════════════
+   SCROLL PROGRESS BAR
+═══════════════════════════════════════ */
+#scrollBar{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--accent2),var(--accent));width:0%;z-index:9999;transition:width .1s;}
+
+/* ═══════════════════════════════════════
+   PARTICLE CANVAS
+═══════════════════════════════════════ */
+#particleCanvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:.5;}
+
+/* ═══════════════════════════════════════
+   NOISE TEXTURE
+═══════════════════════════════════════ */
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:1;opacity:.2;}
+
+/* ═══════════════════════════════════════
+   NAVIGATION
+═══════════════════════════════════════ */
+nav{position:fixed;top:0;left:0;right:0;z-index:500;display:flex;justify-content:space-between;align-items:center;padding:1.2rem 4rem;background:var(--nav-bg);backdrop-filter:blur(28px);-webkit-backdrop-filter:blur(28px);border-bottom:1px solid var(--border);transition:padding .3s,background .3s;}
+nav.scrolled{padding:.8rem 4rem;}
+.nav-logo{font-family:'Playfair Display',serif;font-size:1.55rem;font-weight:900;color:var(--accent);text-decoration:none;letter-spacing:-.02em;}
+.nav-links{display:flex;gap:2rem;list-style:none;align-items:center;}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:.8rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;transition:color .2s;position:relative;padding:.2rem 0;}
+.nav-links a::after{content:'';position:absolute;bottom:0;left:0;width:0;height:1px;background:var(--accent);transition:width .3s;}
+.nav-links a:hover,.nav-links a.active{color:var(--accent);}
+.nav-links a:hover::after,.nav-links a.active::after{width:100%;}
+.nav-right{display:flex;align-items:center;gap:.8rem;}
+
+/* Theme toggle */
+.theme-btn{width:36px;height:36px;border-radius:50%;background:var(--card);border:1px solid var(--border);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1rem;transition:all .2s;color:var(--muted);}
+.theme-btn:hover{border-color:var(--accent);color:var(--accent);transform:rotate(20deg);}
+
+/* Hamburger */
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px;background:none;border:none;}
+.hamburger span{display:block;width:22px;height:2px;background:var(--text);border-radius:2px;transition:all .35s;}
+.hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+.hamburger.open span:nth-child(2){opacity:0;transform:scaleX(0);}
+.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+
+/* Mobile overlay */
+.mobile-nav{position:fixed;inset:0;background:var(--bg);z-index:490;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2rem;opacity:0;pointer-events:none;transform:scale(1.05);transition:opacity .35s,transform .35s;}
+.mobile-nav.open{opacity:1;pointer-events:all;transform:scale(1);}
+.mobile-nav a{color:var(--text);text-decoration:none;font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:700;transition:color .2s;position:relative;}
+.mobile-nav a:hover{color:var(--accent);}
+
+/* ═══════════════════════════════════════
+   BUTTONS
+═══════════════════════════════════════ */
+.btn{display:inline-flex;align-items:center;gap:.5rem;padding:.82rem 1.8rem;border-radius:5px;font-size:.82rem;font-weight:600;letter-spacing:.06em;text-decoration:none;transition:all .25s;cursor:pointer;border:none;font-family:'DM Sans',sans-serif;white-space:nowrap;}
+.btn-primary{background:var(--accent);color:var(--text-inv);}
+.btn-primary:hover{filter:brightness(1.1);transform:translateY(-2px);box-shadow:0 12px 30px rgba(232,197,71,.3);}
+.btn-outline{background:transparent;color:var(--text);border:1px solid var(--border);}
+.btn-outline:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-2px);}
+.btn-ghost{background:rgba(255,255,255,.05);color:var(--muted);border:1px solid var(--border);}
+.btn-ghost:hover{border-color:var(--border-y);color:var(--accent);}
+.btn-sm{padding:.5rem 1.1rem;font-size:.75rem;}
+
+/* ═══════════════════════════════════════
+   SECTIONS & LAYOUT
+═══════════════════════════════════════ */
+section{padding:6rem 4rem;position:relative;z-index:2;}
+.section-inner{max-width:1200px;margin:0 auto;}
+.section-label{font-family:'Space Mono',monospace;font-size:.66rem;color:var(--accent);letter-spacing:.3em;text-transform:uppercase;margin-bottom:1rem;display:flex;align-items:center;gap:.75rem;}
+.section-label::after{content:'';flex:1;max-width:50px;height:1px;background:var(--accent);opacity:.35;}
+h2{font-family:'Playfair Display',serif;font-size:clamp(1.9rem,3.5vw,2.9rem);font-weight:700;line-height:1.1;letter-spacing:-.02em;margin-bottom:1.5rem;}
+
+/* ═══════════════════════════════════════
+   HERO
+═══════════════════════════════════════ */
+.hero{min-height:100vh;display:grid;grid-template-columns:1.1fr .9fr;align-items:center;padding:7rem 4rem 4rem;max-width:1400px;margin:0 auto;gap:2rem;}
+.hero-text{position:relative;z-index:2;}
+.hero-eyebrow{font-family:'Space Mono',monospace;font-size:.72rem;color:var(--accent);letter-spacing:.22em;text-transform:uppercase;margin-bottom:1.5rem;display:flex;align-items:center;gap:.8rem;}
+.hero-eyebrow::before{content:'';width:36px;height:1px;background:var(--accent);}
+h1{font-family:'Playfair Display',serif;font-size:clamp(3rem,6.5vw,5.8rem);font-weight:900;line-height:.95;letter-spacing:-.03em;margin-bottom:1.6rem;}
+h1 .accent{color:var(--accent);}
+.hero-sub{font-size:1rem;color:var(--muted);line-height:1.85;max-width:460px;margin-bottom:.8rem;}
+.hero-sub strong{color:var(--text);font-weight:500;}
+/* Typewriter */
+.typewriter-wrap{min-height:2rem;font-family:'Space Mono',monospace;font-size:.9rem;color:var(--accent2);margin-bottom:2rem;display:flex;align-items:center;gap:.3rem;}
+.cursor{display:inline-block;width:2px;height:1.1em;background:var(--accent);animation:blink .7s step-end infinite;vertical-align:middle;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:0;}}
+.hero-cta{display:flex;gap:1rem;flex-wrap:wrap;align-items:center;}
+.available-dot{display:inline-flex;align-items:center;gap:.5rem;font-size:.72rem;color:var(--accent3);font-family:'Space Mono',monospace;letter-spacing:.05em;margin-top:1.5rem;}
+.available-dot::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--accent3);box-shadow:0 0 10px var(--accent3);animation:pdot 2s ease-in-out infinite;}
+@keyframes pdot{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.5;transform:scale(.8);}}
+
+/* ── Hero Visual & Photo Upload ── */
+.hero-visual{display:flex;justify-content:center;align-items:center;position:relative;z-index:2;}
+.avatar-ring{position:relative;width:340px;height:340px;}
+.avatar-ring::before{content:'';position:absolute;inset:-24px;border-radius:50%;border:1px solid rgba(232,197,71,.18);animation:rot 20s linear infinite;}
+.avatar-ring::after{content:'';position:absolute;inset:-52px;border-radius:50%;border:1px dashed rgba(124,111,255,.18);animation:rot 35s linear infinite reverse;}
+@keyframes rot{to{transform:rotate(360deg);}}
+.avatar-inner{width:100%;height:100%;border-radius:50%;background:linear-gradient(135deg,var(--surface) 0%,#1e1e30 100%);border:2px solid rgba(232,197,71,.15);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:6rem;font-weight:900;color:var(--accent);position:relative;overflow:hidden;cursor:pointer;transition:border-color .3s,box-shadow .3s;user-select:none;}
+.avatar-inner:hover{border-color:rgba(232,197,71,.55);box-shadow:0 0 50px rgba(232,197,71,.12);}
+.avatar-inner img{width:100%;height:100%;object-fit:cover;border-radius:50%;position:absolute;inset:0;z-index:1;}
+.avatar-overlay{position:absolute;inset:0;border-radius:50%;background:rgba(8,8,16,.75);display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;transition:opacity .3s;z-index:2;gap:.3rem;}
+.avatar-inner:hover .avatar-overlay{opacity:1;}
+.ov-icon{font-size:2rem;}
+.ov-text{font-family:'Space Mono',monospace;font-size:.6rem;color:var(--accent);letter-spacing:.1em;text-align:center;line-height:1.5;}
+.photo-hint{position:absolute;bottom:-46px;left:50%;transform:translateX(-50%);font-family:'Space Mono',monospace;font-size:.6rem;color:var(--muted);white-space:nowrap;letter-spacing:.08em;text-align:center;}
+#photoInput{display:none;}
+.badge{position:absolute;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:.5rem .9rem;font-size:.7rem;font-family:'Space Mono',monospace;backdrop-filter:blur(14px);white-space:nowrap;z-index:3;}
+.badge-1{top:7%;left:-17%;color:var(--accent);border-color:rgba(232,197,71,.2);animation:flt 4s ease-in-out infinite 0s;}
+.badge-2{bottom:17%;right:-15%;color:var(--accent2);border-color:rgba(124,111,255,.2);animation:flt 4s ease-in-out infinite -1.8s;}
+.badge-3{bottom:37%;left:-21%;color:var(--accent3);border-color:rgba(80,250,123,.2);animation:flt 4s ease-in-out infinite -.9s;}
+@keyframes flt{0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);}}
+
+/* ═══════════════════════════════════════
+   STATS BAR
+═══════════════════════════════════════ */
+.stats-bar{background:var(--card);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:0 4rem;position:relative;z-index:2;}
+.stats-bar-grid{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);}
+.stat-item{background:var(--card);padding:1.8rem 2rem;text-align:center;transition:background .3s;}
+.stat-item:hover{background:var(--card2);}
+.stat-num{font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:700;color:var(--accent);display:block;line-height:1;}
+.stat-lbl{font-size:.7rem;color:var(--muted);letter-spacing:.08em;margin-top:.4rem;text-transform:uppercase;}
+
+/* ═══════════════════════════════════════
+   ABOUT
+═══════════════════════════════════════ */
+#about{background:var(--surface);}
+.about-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:4.5rem;align-items:start;}
+.about-text p{color:var(--muted);line-height:1.85;font-size:.97rem;margin-bottom:1.1rem;}
+.about-quote{background:var(--card);border-left:3px solid var(--accent);border-radius:0 10px 10px 0;padding:1.2rem 1.5rem;margin:1.5rem 0;font-style:italic;color:var(--text);font-size:.93rem;}
+.info-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.5rem;margin-top:2rem;}
+.info-row{display:flex;gap:.8rem;align-items:center;font-size:.85rem;padding:.4rem 0;border-bottom:1px solid var(--border);}
+.info-row:last-child{border-bottom:none;}
+.info-icon{color:var(--accent);width:20px;font-size:.9rem;flex-shrink:0;}
+.info-lbl{color:var(--muted);min-width:85px;font-size:.8rem;}
+.info-val{color:var(--text);}
+/* Skill bars */
+.sbar-item{margin-bottom:1.6rem;}
+.sbar-head{display:flex;justify-content:space-between;margin-bottom:.55rem;font-size:.84rem;color:var(--muted);}
+.sbar-head span:last-child{font-family:'Space Mono',monospace;color:var(--accent);font-size:.72rem;}
+.sbar-track{height:4px;background:rgba(255,255,255,.06);border-radius:2px;}
+.sbar-fill{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--accent2),var(--accent));position:relative;width:0;transition:width 1.4s cubic-bezier(.4,0,.2,1);}
+.sbar-fill::after{content:'';position:absolute;right:0;top:50%;transform:translate(50%,-50%);width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 10px var(--accent);}
+
+/* ═══════════════════════════════════════
+   SKILLS
+═══════════════════════════════════════ */
+.skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(245px,1fr));gap:1.4rem;margin-top:3rem;}
+.skill-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.8rem;transition:all .3s;position:relative;overflow:hidden;}
+.skill-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent2));transform:scaleX(0);transition:transform .35s;transform-origin:left;}
+.skill-card:hover{border-color:var(--border-y);transform:translateY(-5px);box-shadow:0 16px 50px var(--shadow);}
+.skill-card:hover::before{transform:scaleX(1);}
+.sk-icon{font-size:1.6rem;margin-bottom:.9rem;}
+.skill-card h3{font-family:'Playfair Display',serif;font-size:1.05rem;margin-bottom:.9rem;color:var(--text);}
+.tags{display:flex;flex-wrap:wrap;gap:.4rem;}
+.tag{padding:.25rem .65rem;border-radius:20px;font-size:.7rem;font-family:'Space Mono',monospace;}
+.tag-y{background:rgba(232,197,71,.08);color:var(--accent);border:1px solid rgba(232,197,71,.15);}
+.tag-p{background:rgba(124,111,255,.08);color:#a89cff;border:1px solid rgba(124,111,255,.15);}
+.tag-g{background:rgba(80,250,123,.08);color:var(--accent3);border:1px solid rgba(80,250,123,.15);}
+.tag-b{background:rgba(56,189,248,.08);color:#7dd3fc;border:1px solid rgba(56,189,248,.15);}
+.tag-r{background:rgba(248,113,113,.08);color:#fca5a5;border:1px solid rgba(248,113,113,.15);}
+
+/* ═══════════════════════════════════════
+   JOURNEY TIMELINE
+═══════════════════════════════════════ */
+#journey{background:var(--bg);}
+.timeline{position:relative;margin-top:3.5rem;padding-left:2.5rem;}
+.timeline::before{content:'';position:absolute;left:0;top:0;bottom:0;width:1px;background:linear-gradient(to bottom,var(--accent),var(--accent2),transparent);opacity:.35;}
+.tl-item{position:relative;padding-left:2rem;margin-bottom:3rem;}
+.tl-item::before{content:'';position:absolute;left:-2.5rem;top:.3rem;width:12px;height:12px;border-radius:50%;background:var(--accent);box-shadow:0 0 14px rgba(232,197,71,.5);transform:translateX(50%);}
+.tl-dot-ring{position:absolute;left:-2.5rem;top:.3rem;width:24px;height:24px;border-radius:50%;border:1px solid rgba(232,197,71,.25);transform:translateX(calc(50% - 6px)) translateY(-6px);animation:ring-pulse 2s ease-in-out infinite;}
+@keyframes ring-pulse{0%,100%{transform:translateX(calc(50% - 6px)) translateY(-6px) scale(1);opacity:.5;}50%{transform:translateX(calc(50% - 6px)) translateY(-6px) scale(1.5);opacity:0;}}
+.tl-date{font-family:'Space Mono',monospace;font-size:.66rem;color:var(--accent);letter-spacing:.12em;margin-bottom:.4rem;text-transform:uppercase;}
+.tl-title{font-family:'Playfair Display',serif;font-size:1.12rem;font-weight:700;margin-bottom:.25rem;}
+.tl-org{font-size:.82rem;color:var(--accent2);font-weight:500;margin-bottom:.6rem;}
+.tl-desc{color:var(--muted);font-size:.88rem;line-height:1.75;}
+.tl-tags{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.8rem;}
+
+/* ═══════════════════════════════════════
+   PROJECTS — with filter
+═══════════════════════════════════════ */
+#projects{background:var(--surface);}
+.filter-bar{display:flex;gap:.6rem;flex-wrap:wrap;margin:2rem 0;}
+.filter-btn{padding:.45rem 1.1rem;border-radius:20px;font-size:.75rem;font-family:'Space Mono',monospace;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;transition:all .2s;letter-spacing:.05em;}
+.filter-btn:hover,.filter-btn.active{background:var(--accent);color:var(--text-inv);border-color:var(--accent);}
+.projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:1.8rem;}
+.proj-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:2.2rem;transition:all .35s;position:relative;overflow:hidden;display:flex;flex-direction:column;cursor:pointer;}
+.proj-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent2),var(--accent));opacity:.45;transition:opacity .3s;}
+.proj-card:hover{transform:translateY(-6px);border-color:rgba(124,111,255,.25);box-shadow:0 24px 60px var(--shadow);}
+.proj-card:hover::after{opacity:1;}
+.proj-card.featured{border-color:rgba(232,197,71,.2);background:linear-gradient(145deg,var(--card),var(--card2));}
+.proj-card.featured::after{background:linear-gradient(90deg,var(--accent),#f5a623);}
+.proj-card[data-hidden]{opacity:0;transform:scale(.95);pointer-events:none;position:absolute;visibility:hidden;}
+.feat-badge{display:inline-flex;align-items:center;gap:.35rem;background:rgba(232,197,71,.1);color:var(--accent);border:1px solid rgba(232,197,71,.2);border-radius:20px;padding:.22rem .7rem;font-size:.62rem;font-family:'Space Mono',monospace;text-transform:uppercase;margin-bottom:.9rem;}
+.feat-badge::before{content:'★';}
+.proj-num{font-family:'Space Mono',monospace;font-size:.62rem;color:var(--muted);letter-spacing:.15em;margin-bottom:.9rem;text-transform:uppercase;}
+.proj-card h3{font-family:'Playfair Display',serif;font-size:1.22rem;font-weight:700;margin-bottom:.65rem;line-height:1.3;}
+.proj-card p{color:var(--muted);font-size:.87rem;line-height:1.75;margin-bottom:1.4rem;flex:1;}
+.proj-footer{display:flex;align-items:center;gap:1rem;margin-top:auto;flex-wrap:wrap;}
+.proj-link{display:inline-flex;align-items:center;gap:.35rem;color:var(--accent);text-decoration:none;font-size:.76rem;font-weight:600;letter-spacing:.05em;font-family:'Space Mono',monospace;transition:gap .2s;}
+.proj-link:hover{gap:.65rem;}
+.proj-detail-btn{padding:.4rem .9rem;border-radius:20px;background:rgba(124,111,255,.1);color:#a89cff;border:1px solid rgba(124,111,255,.18);font-size:.72rem;font-family:'Space Mono',monospace;cursor:pointer;transition:all .2s;}
+.proj-detail-btn:hover{background:rgba(124,111,255,.2);border-color:rgba(124,111,255,.3);}
+
+/* ═══════════════════════════════════════
+   PROJECT MODAL
+═══════════════════════════════════════ */
+.modal-overlay{position:fixed;inset:0;background:var(--modal-overlay);z-index:800;display:flex;align-items:center;justify-content:center;padding:2rem;opacity:0;pointer-events:none;transition:opacity .3s;backdrop-filter:blur(10px);}
+.modal-overlay.open{opacity:1;pointer-events:all;}
+.modal-box{background:var(--surface);border:1px solid var(--border-y);border-radius:20px;max-width:680px;width:100%;max-height:90vh;overflow-y:auto;padding:2.5rem;position:relative;transform:translateY(20px) scale(.97);transition:transform .3s;}
+.modal-overlay.open .modal-box{transform:none;}
+.modal-close{position:absolute;top:1.2rem;right:1.5rem;background:var(--card);border:1px solid var(--border);border-radius:50%;width:36px;height:36px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:1rem;color:var(--muted);transition:all .2s;}
+.modal-close:hover{border-color:var(--accent4);color:var(--accent4);}
+.modal-label{font-family:'Space Mono',monospace;font-size:.66rem;color:var(--accent);letter-spacing:.22em;text-transform:uppercase;margin-bottom:.7rem;}
+.modal-title{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:700;margin-bottom:1rem;line-height:1.2;}
+.modal-desc{color:var(--muted);line-height:1.85;font-size:.93rem;margin-bottom:1.5rem;}
+.modal-section{margin-bottom:1.5rem;}
+.modal-section h4{font-family:'Space Mono',monospace;font-size:.7rem;color:var(--accent);letter-spacing:.15em;text-transform:uppercase;margin-bottom:.8rem;}
+.modal-feature{display:flex;gap:.7rem;align-items:flex-start;margin-bottom:.7rem;font-size:.88rem;color:var(--muted);}
+.modal-feature::before{content:'→';color:var(--accent);flex-shrink:0;}
+.modal-actions{display:flex;gap:1rem;margin-top:2rem;flex-wrap:wrap;}
+
+/* ═══════════════════════════════════════
+   CERTIFICATIONS
+═══════════════════════════════════════ */
+#certifications{background:var(--bg);}
+.cert-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.4rem;margin-top:3rem;}
+.cert-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.7rem;display:flex;gap:1.1rem;align-items:flex-start;transition:all .3s;}
+.cert-card:hover{border-color:var(--border-y);transform:translateY(-4px);box-shadow:0 14px 40px var(--shadow);}
+.cert-icon{width:46px;height:46px;border-radius:12px;background:rgba(232,197,71,.07);border:1px solid rgba(232,197,71,.14);display:flex;align-items:center;justify-content:center;font-size:1.35rem;flex-shrink:0;}
+.cert-body h4{font-family:'Playfair Display',serif;font-size:.95rem;font-weight:700;margin-bottom:.2rem;}
+.cert-body p{font-size:.78rem;color:var(--muted);line-height:1.5;}
+.cert-status{display:inline-block;margin-top:.5rem;font-size:.63rem;font-family:'Space Mono',monospace;border-radius:20px;padding:.18rem .58rem;letter-spacing:.08em;}
+.cert-done{color:var(--accent3);background:rgba(80,250,123,.07);border:1px solid rgba(80,250,123,.14);}
+.cert-wip{color:var(--accent);background:rgba(232,197,71,.07);border:1px solid rgba(232,197,71,.14);}
+
+/* ═══════════════════════════════════════
+   TESTIMONIALS
+═══════════════════════════════════════ */
+#testimonials{background:var(--surface);}
+.testi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:1.6rem;margin-top:3rem;}
+.testi-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:2rem;position:relative;transition:all .3s;}
+.testi-card:hover{border-color:var(--border-y);transform:translateY(-4px);box-shadow:0 14px 40px var(--shadow);}
+.testi-card::before{content:'"';font-family:'Playfair Display',serif;font-size:5rem;color:var(--accent);opacity:.1;position:absolute;top:.4rem;left:1.4rem;line-height:1;pointer-events:none;}
+.testi-stars{color:var(--accent);font-size:.8rem;margin-bottom:.8rem;letter-spacing:.1em;}
+.testi-text{color:var(--muted);font-size:.88rem;line-height:1.8;margin-bottom:1.5rem;font-style:italic;}
+.testi-author{display:flex;align-items:center;gap:.9rem;}
+.testi-av{width:40px;height:40px;border-radius:50%;background:var(--card2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:700;color:var(--accent);font-size:.88rem;}
+.testi-name{font-weight:600;font-size:.86rem;}
+.testi-role{font-size:.74rem;color:var(--muted);}
+
+/* ═══════════════════════════════════════
+   CONTACT
+═══════════════════════════════════════ */
+#contact{background:var(--bg);}
+.contact-grid{display:grid;grid-template-columns:1fr 1.1fr;gap:5rem;margin-top:3rem;align-items:start;}
+.contact-item{display:flex;align-items:flex-start;gap:1rem;margin-bottom:1.7rem;}
+.contact-icon-box{width:46px;height:46px;background:var(--card);border:1px solid var(--border);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.05rem;flex-shrink:0;transition:all .25s;}
+.contact-item:hover .contact-icon-box{border-color:var(--accent);box-shadow:0 0 18px rgba(232,197,71,.12);}
+.contact-lbl{font-size:.67rem;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.25rem;}
+.contact-val{font-size:.9rem;color:var(--text);}
+.contact-val a{color:var(--text);text-decoration:none;transition:color .2s;}
+.contact-val a:hover{color:var(--accent);}
+.copy-btn{margin-left:.5rem;background:none;border:none;cursor:pointer;color:var(--muted);font-size:.8rem;transition:color .2s;vertical-align:middle;padding:.1rem .3rem;}
+.copy-btn:hover{color:var(--accent);}
+.social-row{display:flex;gap:.8rem;margin-top:2rem;}
+.soc-link{width:46px;height:46px;background:var(--card);border:1px solid var(--border);border-radius:10px;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:1.05rem;transition:all .25s;}
+.soc-link:hover{border-color:var(--accent);transform:translateY(-3px);box-shadow:0 8px 22px rgba(232,197,71,.15);}
+/* Form */
+.form-group{margin-bottom:1.1rem;}
+.form-row-2{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.1rem;}
+.field-wrap{position:relative;}
+.field-wrap input,.field-wrap textarea,.field-wrap select{width:100%;background:var(--input-bg);border:1.5px solid var(--border);border-radius:8px;padding:.9rem 1.2rem;color:var(--text);font-family:'DM Sans',sans-serif;font-size:.9rem;transition:border-color .2s,box-shadow .2s;outline:none;}
+.field-wrap input:focus,.field-wrap textarea:focus,.field-wrap select:focus{border-color:rgba(232,197,71,.45);box-shadow:0 0 0 3px rgba(232,197,71,.06);}
+.field-wrap input.error,.field-wrap textarea.error,.field-wrap select.error{border-color:rgba(248,113,113,.5);box-shadow:0 0 0 3px rgba(248,113,113,.06);}
+.field-wrap input.ok,.field-wrap textarea.ok{border-color:rgba(80,250,123,.45);}
+input::placeholder,textarea::placeholder{color:var(--muted);}
+textarea{resize:vertical;min-height:140px;}
+select option{background:var(--input-bg);}
+.field-err{font-size:.72rem;color:var(--accent4);margin-top:.3rem;display:none;font-family:'Space Mono',monospace;}
+.field-err.show{display:block;}
+.char-count{position:absolute;bottom:.7rem;right:1rem;font-size:.68rem;color:var(--muted);font-family:'Space Mono',monospace;}
+
+/* ═══════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════ */
+footer{background:var(--surface);border-top:1px solid var(--border);padding:3rem 4rem 2rem;position:relative;z-index:2;}
+.footer-inner{max-width:1200px;margin:0 auto;}
+.footer-top{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:3rem;margin-bottom:2.5rem;}
+.footer-brand p{color:var(--muted);font-size:.86rem;line-height:1.7;margin:.8rem 0 1.5rem;}
+.footer-col h4{font-family:'Space Mono',monospace;font-size:.66rem;color:var(--accent);letter-spacing:.18em;text-transform:uppercase;margin-bottom:1.2rem;}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:.65rem;}
+.footer-col ul li a{color:var(--muted);text-decoration:none;font-size:.84rem;transition:color .2s;}
+.footer-col ul li a:hover{color:var(--accent);}
+.footer-bottom{border-top:1px solid var(--border);padding-top:1.6rem;display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:.76rem;flex-wrap:wrap;gap:.5rem;}
+.footer-bottom a{color:var(--muted);text-decoration:none;transition:color .2s;}
+.footer-bottom a:hover{color:var(--accent);}
+
+/* ═══════════════════════════════════════
+   FLOATING ELEMENTS
+═══════════════════════════════════════ */
+.back-top{position:fixed;bottom:2rem;right:2rem;width:46px;height:46px;background:var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:400;opacity:0;transform:translateY(12px);transition:all .3s;border:none;font-size:1.1rem;color:var(--text-inv);font-weight:700;}
+.back-top.show{opacity:1;transform:translateY(0);}
+.back-top:hover{filter:brightness(1.1);transform:translateY(-3px);}
+
+/* ═══════════════════════════════════════
+   TOAST SYSTEM
+═══════════════════════════════════════ */
+.toast-container{position:fixed;bottom:2.5rem;right:2rem;display:flex;flex-direction:column;gap:.7rem;z-index:700;}
+.toast{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:.9rem 1.4rem;font-family:'Space Mono',monospace;font-size:.74rem;display:flex;align-items:center;gap:.6rem;transform:translateX(120%);transition:transform .4s cubic-bezier(.34,1.56,.64,1);max-width:280px;box-shadow:0 8px 30px var(--shadow);}
+.toast.show{transform:translateX(0);}
+.toast-success{border-color:rgba(80,250,123,.3);color:var(--accent3);}
+.toast-info{border-color:rgba(124,111,255,.3);color:#a89cff;}
+.toast-warn{border-color:rgba(232,197,71,.3);color:var(--accent);}
+
+/* ═══════════════════════════════════════
+   ANIMATIONS
+═══════════════════════════════════════ */
+.fade-in{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease;}
+.fade-in.visible{opacity:1;transform:translateY(0);}
+.fade-left{opacity:0;transform:translateX(-28px);transition:opacity .7s ease,transform .7s ease;}
+.fade-left.visible{opacity:1;transform:translateX(0);}
+.fade-right{opacity:0;transform:translateX(28px);transition:opacity .7s ease,transform .7s ease;}
+.fade-right.visible{opacity:1;transform:translateX(0);}
+
+/* ═══════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════ */
+@media(max-width:960px){
+  nav{padding:1rem 2rem;}nav.scrolled{padding:.75rem 2rem;}
+  .nav-links,.nav-hire{display:none;}
+  .hamburger{display:flex;}
+  .hero{grid-template-columns:1fr;padding:7rem 2rem 4rem;text-align:center;gap:4rem;max-width:100%;}
+  .hero-eyebrow,.hero-cta,.available-dot,.typewriter-wrap{justify-content:center;}
+  .hero-sub{margin:0 auto;}
+  .hero-visual{order:-1;}
+  section{padding:4rem 2rem;}
+  .about-grid,.contact-grid{grid-template-columns:1fr;gap:2.5rem;}
+  .stats-bar{padding:0 2rem;}
+  .stats-bar-grid{grid-template-columns:repeat(2,1fr);}
+  .footer-top{grid-template-columns:1fr;gap:1.8rem;}
+  .footer-bottom{flex-direction:column;text-align:center;}
+  .form-row-2{grid-template-columns:1fr;}
+  .toast-container{right:1rem;left:1rem;}
+  .toast{max-width:100%;}
+}
+@media(max-width:580px){
+  .projects-grid,.skills-grid,.cert-grid,.testi-grid{grid-template-columns:1fr;}
+  .avatar-ring{width:270px;height:270px;}
+  .badge-1,.badge-3{display:none;}
+  h1{font-size:clamp(2.6rem,10vw,4rem);}
+  .modal-box{padding:1.8rem 1.4rem;}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ SCROLL PROGRESS ═══ -->
+<div id="scrollBar"></div>
+
+<!-- ═══ PARTICLE CANVAS ═══ -->
+<canvas id="particleCanvas"></canvas>
+
+<!-- ═══ NAV ═══ -->
+<nav id="navbar">
+  <a href="#home" class="nav-logo">k.</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#journey">Journey</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#certifications">Certs</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="theme-btn" id="themeBtn" title="Toggle theme">🌙</button>
+    <a href="#contact" class="btn btn-primary btn-sm nav-hire">Hire Me</a>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ═══ MOBILE NAV ═══ -->
+<div class="mobile-nav" id="mobileNav">
+  <a href="#about" class="mob-link">About</a>
+  <a href="#skills" class="mob-link">Skills</a>
+  <a href="#journey" class="mob-link">Journey</a>
+  <a href="#projects" class="mob-link">Projects</a>
+  <a href="#certifications" class="mob-link">Certifications</a>
+  <a href="#contact" class="mob-link">Contact</a>
+  <a href="#contact" class="btn btn-primary mob-link" style="margin-top:.5rem;">Hire Me</a>
+</div>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero" id="home">
+  <div class="hero-text fade-in">
+    <div class="hero-eyebrow">Welcome to my Portfolio</div>
+    <h1>Hi, I'm<br><span class="accent">Kajal</span></h1>
+    <p class="hero-sub"><strong>Aspiring Data Analyst</strong> skilled in Python, SQL, Excel &amp; Power BI — turning messy data into clear, impactful stories.</p>
+    <div class="typewriter-wrap"><span id="typeText"></span><span class="cursor"></span></div>
+    <div class="hero-cta">
+      <a href="#projects" class="btn btn-primary">View My Work →</a>
+      <a href="https://github.com/kajalk1290" target="_blank" class="btn btn-outline">GitHub Profile</a>
+      <button class="btn btn-ghost" onclick="downloadResume()">⬇ Resume</button>
+    </div>
+    <div class="available-dot">Available for Data Analyst opportunities</div>
+  </div>
+
+  <div class="hero-visual fade-in" style="transition-delay:.2s">
+    <div class="avatar-ring">
+      <div class="avatar-inner" id="avatarInner" onclick="document.getElementById('photoInput').click()" title="Click to upload your photo">
+        <span id="avatarLetter">K</span>
+        <img id="avatarImg" src="" alt="" style="display:none"/>
+        <div class="avatar-overlay">
+          <div class="ov-icon">📷</div>
+          <div class="ov-text">Upload<br>Your Photo</div>
+        </div>
+      </div>
+      <div class="photo-hint" id="photoHint">📸 Click to upload your photo</div>
+      <input type="file" id="photoInput" accept="image/*"/>
+      <div class="badge badge-1">📊 Data Analysis</div>
+      <div class="badge badge-2">🐍 Python</div>
+      <div class="badge badge-3">✈️ Flight Fares</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ STATS BAR ═══ -->
+<div class="stats-bar" id="statsBar">
+  <div class="stats-bar-grid">
+    <div class="stat-item"><span class="stat-num" data-count="4">0+</span><div class="stat-lbl">Projects Completed</div></div>
+    <div class="stat-item"><span class="stat-num" data-count="5">0+</span><div class="stat-lbl">Tools Mastered</div></div>
+    <div class="stat-item"><span class="stat-num" data-count="6">0+</span><div class="stat-lbl">Certifications</div></div>
+    <div class="stat-item"><span class="stat-num" data-count="100">0%</span><div class="stat-lbl">Dedication</div></div>
+  </div>
+</div>
+
+<!-- ═══ ABOUT ═══ -->
+<section id="about">
+  <div class="section-inner">
+    <div class="about-grid">
+      <div class="about-text fade-left">
+        <div class="section-label">01 — About Me</div>
+        <h2>Turning Data Into <em style="color:var(--accent)">Decisions</em></h2>
+        <p>I'm Kajal, an aspiring Data Analyst with hands-on project experience in data analysis and visualization. I enjoy identifying patterns in data and transforming complex datasets into clear, actionable insights that drive real business value.</p>
+        <p>Through my projects, I've worked with diverse real-world datasets — performing data cleaning, exploratory analysis, and building interactive dashboards that go beyond description to actively support decisions.</p>
+        <div class="about-quote">"Every dataset tells a story. My goal is to present it clearly, honestly, and beautifully."</div>
+        <p>I'm actively seeking Data Analyst opportunities where I can apply my skills, contribute valuable insights, and keep growing as part of a motivated team.</p>
+        <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-top:2rem;">
+          <a href="#projects" class="btn btn-primary" style="font-size:.82rem">See Projects →</a>
+          <a href="https://www.linkedin.com/in/kajaldataanalysis/" target="_blank" class="btn btn-ghost" style="font-size:.82rem">LinkedIn Profile</a>
+          <button class="btn btn-ghost" style="font-size:.82rem" onclick="downloadResume()">⬇ Resume</button>
+        </div>
+      </div>
+      <div class="fade-right" style="transition-delay:.1s">
+        <div class="section-label">Core Proficiency</div>
+        <div style="margin-top:1.5rem">
+          <div class="sbar-item"><div class="sbar-head"><span>Python / Pandas</span><span>88%</span></div><div class="sbar-track"><div class="sbar-fill" data-width="88"></div></div></div>
+          <div class="sbar-item"><div class="sbar-head"><span>Data Visualization</span><span>85%</span></div><div class="sbar-track"><div class="sbar-fill" data-width="85"></div></div></div>
+          <div class="sbar-item"><div class="sbar-head"><span>SQL</span><span>80%</span></div><div class="sbar-track"><div class="sbar-fill" data-width="80"></div></div></div>
+          <div class="sbar-item"><div class="sbar-head"><span>Excel / Power BI</span><span>82%</span></div><div class="sbar-track"><div class="sbar-fill" data-width="82"></div></div></div>
+          <div class="sbar-item"><div class="sbar-head"><span>Statistical Analysis</span><span>75%</span></div><div class="sbar-track"><div class="sbar-fill" data-width="75"></div></div></div>
+          <div class="sbar-item"><div class="sbar-head"><span>Machine Learning</span><span>68%</span></div><div class="sbar-track"><div class="sbar-fill" data-width="68"></div></div></div>
+        </div>
+        <div class="info-card">
+          <div class="section-label" style="font-size:.6rem;margin-bottom:.8rem">Quick Info</div>
+          <div class="info-row"><span class="info-icon">📍</span><span class="info-lbl">Location</span><span class="info-val">India</span></div>
+          <div class="info-row"><span class="info-icon">🎓</span><span class="info-lbl">Education</span><span class="info-val">B.A / M.A — ECONOMICS Kanpur university And AIPA Course From NSTI Kanpur</span></div>
+          <div class="info-row"><span class="info-icon">💼</span><span class="info-lbl">Status</span><span class="info-val" style="color:var(--accent3)">Open to Work</span></div>
+          <div class="info-row"><span class="info-icon">🌐</span><span class="info-lbl">Languages</span><span class="info-val">Hindi, English</span></div>
+          <div class="info-row"><span class="info-icon">⏱️</span><span class="info-lbl">Level</span><span class="info-val">Fresher </span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SKILLS ═══ -->
+<section id="skills" style="background:var(--bg)">
+  <div class="section-inner">
+    <div class="section-label fade-in">02 — Skills</div>
+    <h2 class="fade-in">What I <em style="color:var(--accent)">Bring</em> to the Table</h2>
+    <div class="skills-grid">
+      <div class="skill-card fade-in"><div class="sk-icon">🐍</div><h3>Programming</h3><div class="tags"><span class="tag tag-y">Python</span><span class="tag tag-y">Pandas</span><span class="tag tag-y">NumPy</span><span class="tag tag-y">Scikit-learn</span><span class="tag tag-y">Jupyter</span></div></div>
+      <div class="skill-card fade-in" style="transition-delay:.08s"><div class="sk-icon">📊</div><h3>Visualization</h3><div class="tags"><span class="tag tag-p">Matplotlib</span><span class="tag tag-p">Seaborn</span><span class="tag tag-p">Plotly</span><span class="tag tag-p">Power BI</span><span class="tag tag-p">Tableau</span></div></div>
+      <div class="skill-card fade-in" style="transition-delay:.16s"><div class="sk-icon">🗄️</div><h3>Databases</h3><div class="tags"><span class="tag tag-g">SQL</span><span class="tag tag-g">MySQL</span><span class="tag tag-g">Excel</span><span class="tag tag-g">Git</span><span class="tag tag-g">GitHub</span></div></div>
+      <div class="skill-card fade-in" style="transition-delay:.24s"><div class="sk-icon">🧠</div><h3>Analytics</h3><div class="tags"><span class="tag tag-b">EDA</span><span class="tag tag-b">Statistics</span><span class="tag tag-b">Forecasting</span><span class="tag tag-b">Cleaning</span><span class="tag tag-b">Trends</span></div></div>
+      <div class="skill-card fade-in" style="transition-delay:.32s"><div class="sk-icon">🤖</div><h3>Machine Learning</h3><div class="tags"><span class="tag tag-r">Regression</span><span class="tag tag-r">Classification</span><span class="tag tag-r">Scikit-learn</span><span class="tag tag-r">Feature Eng.</span></div></div>
+      <div class="skill-card fade-in" style="transition-delay:.4s"><div class="sk-icon">💡</div><h3>Soft Skills</h3><div class="tags"><span class="tag tag-y">Problem Solving</span><span class="tag tag-y">Communication</span><span class="tag tag-y">Teamwork</span><span class="tag tag-y">Detail-Oriented</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ JOURNEY ═══ -->
+<section id="journey" style="background:var(--surface)">
+  <div class="section-inner">
+    <div class="section-label fade-in">03 — My Journey</div>
+    <h2 class="fade-in">How I <em style="color:var(--accent)">Got Here</em></h2>
+    <div class="timeline">
+      <div class="tl-item fade-in">
+        <div class="tl-dot-ring"></div>
+        <div class="tl-date">2025 — 2026</div>
+        <div class="tl-title">Artificial Intelligence Programming assistant — Projects &amp; Self-Learning</div>
+        <div class="tl-org"> NSTI Kanpur</div>
+        <div class="tl-desc"> Artificial Intelligence aur programming ke field mein strong foundation develop ki hai. Maine Python ke through basic se advanced concepts seekhe aur AI ke practical use ko samjha.
+
+Key Skills & Learnings:
+
+Python programming (basics to intermediate)
+
+Machine Learning ke fundamentals (supervised & unsupervised learning)
+
+Data analysis using NumPy & Pandas
+
+Data visualization using Matplotlib
+
+Neural Networks aur Deep Learning ke basics
+
+Chatbots aur simple AI-based projects banana
+
+APIs aur automation tools ka use
+
+Strong problem-solving aur logical thinking</div>
+        <div class="tl-tags"><span class="tag tag-y">Python</span><span class="tag tag-p">Power BI</span><span class="tag tag-g">SQL</span><span class="tag tag-b">EDA</span></div>
+      </div>
+      <div class="tl-item fade-in" style="transition-delay:.1s">
+        <div class="tl-dot-ring"></div>
+        <div class="tl-date">2023 — 2025</div>
+        <div class="tl-title">Master's Degree  in Economics</div>
+        <div class="tl-org">Kanpur University </div>
+        <div class="tl-desc">
+Economics is a subject that studies how resources are produced, distributed, and consumed. It helps us understand how individuals, societies, and governments make decisions with limited resources. Through economics, we learn about market behavior, inflation, unemployment, economic growth, and the impact of policies. It plays a crucial role in a country’s development and helps us make informed and rational decisions in everyday life.
+</div>
+        <div class="tl-tags"><span class="tag tag-y">Demand & Supply</span><span class="tag tag-p">Opportunity Cost</span><span class="tag tag-b">Monetary Policy</span><span class="tag tag-r">Economic Growth</span></div>
+      </div>
+      <div class="tl-item fade-in" style="transition-delay:.2s">
+        <div class="tl-dot-ring"></div>
+        <div class="tl-date">2020 — 2023</div>
+        <div class="tl-title">Bachelor's Degree in Economics and Political Science</div>
+        <div class="tl-org">Kanpur University — India</div>
+        <div class="tl-desc">During this course, I understood the relationship between economics and politics. I learned about economic theories, government policies, and their impact on society. I also developed skills in research, data analysis, and clear communication.</div>
+        <div class="tl-tags"><span class="tag tag-y"></span>Democracy</span><span class="tag tag-p">Public Policy</span><span class="tag tag-g">Fiscal Policy</span><span class="tag tag-b">Monetary Policy</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PROJECTS ═══ -->
+<section id="projects">
+  <div class="section-inner">
+    <div class="section-label fade-in">04 — Projects</div>
+    <h2 class="fade-in">Work That <em style="color:var(--accent)">Speaks</em></h2>
+    <div class="filter-bar fade-in">
+      <button class="filter-btn active" data-filter="all">All Projects</button>
+      <button class="filter-btn" data-filter="analysis">Data Analysis</button>
+      <button class="filter-btn" data-filter="dashboard">Dashboard</button>
+      <button class="filter-btn" data-filter="price">Price Analytics</button>
+    </div>
+    <div class="projects-grid" id="projectsGrid">
+
+      <!-- FLIGHT FARE -->
+      <div class="proj-card featured fade-in" data-cat="price"
+        data-title="✈️ Flight Fare Detection & Analysis"
+        data-desc="A data-driven project analyzing flight pricing patterns to detect fare trends and predict optimal booking windows. Explores how airline, route, departure time, stops, and booking lead time influence ticket prices."
+        data-f1="Collected & cleaned real flight pricing data from multiple routes across India"
+        data-f2="Performed EDA to identify peak pricing periods, cheapest days, and optimal booking windows"
+        data-f3="Built regression models to predict fare ranges with ~82% accuracy"
+        data-f4="Created interactive visualizations showing price trends by airline, route, and time"
+        data-github="https://github.com/kajalk1290"
+        data-tags="Python,Pandas,Seaborn,EDA,Regression">
+        <div class="feat-badge">Latest Project</div>
+        <div class="proj-num">Project 01 · Price Analytics</div>
+        <h3>✈️ Flight Fare Detection & Analysis</h3>
+        <p>Analyzing flight pricing patterns to identify fare trends and predict optimal booking windows — helping travelers save money with data-backed decisions.</p>
+        <div class="tags" style="margin-bottom:1.4rem"><span class="tag tag-y">Python</span><span class="tag tag-p">Pandas</span><span class="tag tag-p">Seaborn</span><span class="tag tag-g">EDA</span><span class="tag tag-b">Regression</span></div>
+        <div class="proj-footer">
+          <a href="https://github.com/kajalk1290/flight-fare-detection" target="_blank" class="proj-link">GitHub →</a>
+          <button class="proj-detail-btn" onclick="openModal(this.closest('.proj-card'))">View Details</button>
+        </div>
+      </div>
+
+      <!-- TECH SKILLS -->
+      <div class="proj-card fade-in" style="transition-delay:.1s" data-cat="analysis"
+        data-title="🔍 Tech Skill Demand Checker"
+        data-desc="An analytical tool that scrapes and analyzes job market data to identify the most in-demand technical skills across different roles and industries — helping job seekers make smarter career decisions."
+        data-f1="Scraped job postings from major platforms using Python BeautifulSoup"
+        data-f2="Cleaned and normalized skill mentions across thousands of job descriptions"
+        data-f3="Analyzed skill frequency by role, industry, and location"
+        data-f4="Visualized demand trends in interactive bar charts and word clouds"
+        data-github="https://github.com/kajalk1290/TechSkillsDemandChecker-Project-"
+        data-tags="Python,Pandas,BeautifulSoup,Web Scraping,Matplotlib">
+        <div class="proj-num">Project 02 · Data Analysis</div>
+        <h3>🔍 Tech Skill Demand Checker</h3>
+        <p>Scrapes and analyzes job market data to identify the most in-demand technical skills across roles and industries — helping job seekers make smarter career decisions.</p>
+        <div class="tags" style="margin-bottom:1.4rem"><span class="tag tag-y">Python</span><span class="tag tag-p">Pandas</span><span class="tag tag-g">Web Scraping</span></div>
+        <div class="proj-footer">
+          <a href="https://github.com/kajalk1290/TechSkillsDemandChecker-Project-" target="_blank" class="proj-link">GitHub →</a>
+          <button class="proj-detail-btn" onclick="openModal(this.closest('.proj-card'))">View Details</button>
+        </div>
+      </div>
+
+      <!-- COVID DASHBOARD -->
+      <div class="proj-card fade-in" style="transition-delay:.2s" data-cat="dashboard"
+        data-title="🦠 COVID-19 Data Analysis & Interactive Dashboard"
+        data-desc="Comprehensive analysis of COVID-19 data featuring interactive visualizations, trend tracking, and statistical breakdowns. Transforms raw pandemic data into meaningful public health insights."
+        data-f1="Cleaned and processed large-scale COVID-19 datasets from WHO and JHU"
+        data-f2="Built interactive Plotly dashboards with time-series and case distribution charts"
+        data-f3="Performed statistical analysis on infection rates, recovery, and mortality"
+        data-f4="Created animated visualizations showing pandemic progression over time"
+        data-github="https://github.com/kajalk1290/COVID-19-Data-Cleanup-Visualization"
+        data-tags="Plotly,Matplotlib,Pandas,EDA,Statistics">
+        <div class="proj-num">Project 03 · Dashboard</div>
+        <h3>🦠 COVID-19-Data-Cleanup-Visualization
+</h3>
+        <p>Comprehensive COVID-19 analysis with interactive visualizations, trend tracking, and statistical breakdowns that transform raw pandemic data into meaningful public health insights.</p>
+        <div class="tags" style="margin-bottom:1.4rem"><span class="tag tag-y">Plotly</span><span class="tag tag-p">Matplotlib</span><span class="tag tag-g">EDA</span></div>
+        <div class="proj-footer">
+          <a href="https://github.com/kajalk1290/COVID-19-Data-Cleanup-Visualization" target="_blank" class="proj-link">GitHub →</a>
+          <button class="proj-detail-btn" onclick="openModal(this.closest('.proj-card'))">View Details</button>
+        </div>
+      </div>
+
+      <!-- COVID GLOBAL -->
+      <div class="proj-card fade-in" style="transition-delay:.3s" data-cat="analysis"
+        data-title="🌍 COVID-19 Global Trends & Country Analysis"
+        data-desc="A deep-dive into global COVID-19 patterns across countries — comparing infection rates, recovery trends, and policy impacts using rich visual storytelling and geospatial data mapping."
+        data-f1="Analyzed country-level COVID data across 150+ nations"
+        data-f2="Built geospatial visualizations using choropleth maps"
+        data-f3="Compared policy effectiveness and vaccination rollouts"
+        data-f4="Applied correlation analysis between economic factors and health outcomes"
+        data-github="https://github.com/kajalk1290/Global-COVID-19-Trends-Analysis-Dashboard"
+        data-tags="Python,Seaborn,Plotly,Statistics,Geospatial">
+        <div class="proj-num">Project 04 · Global Analysis</div>
+        <h3>🌍 Global-COVID-19-Trends-Analysis-Dashboard
+</h3>
+        <p>Deep-dive into global COVID-19 patterns across 150+ countries — comparing infection rates, recovery trends, and policy impacts with geospatial data mapping.</p>
+        <div class="tags" style="margin-bottom:1.4rem"><span class="tag tag-y">Python</span><span class="tag tag-p">Seaborn</span><span class="tag tag-g">Statistics</span></div>
+        <div class="proj-footer">
+          <a href="https://github.com/kajalk1290/Global-COVID-19-Trends-Analysis-Dashboard" target="_blank" class="proj-link">GitHub →</a>
+          <button class="proj-detail-btn" onclick="openModal(this.closest('.proj-card'))">View Details</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CERTIFICATIONS ═══ -->
+<section id="certifications" style="background:var(--surface)">
+  <div class="section-inner">
+    <div class="section-label fade-in">05 — Certifications</div>
+    <h2 class="fade-in">Learning Never <em style="color:var(--accent)">Stops</em></h2>
+    <div class="cert-grid">
+      <div class="cert-card fade-in"><div class="cert-icon">🐍</div><div class="cert-body"><h4>Python for Data Science & AI</h4><p>Coursera / IBM — Analysis, visualization, ML fundamentals.</p><span class="cert-status cert-done">✓ Completed</span></div></div>
+      <div class="cert-card fade-in" style="transition-delay:.08s"><div class="cert-icon">🗄️</div><div class="cert-body"><h4>SQL for Data Analysis</h4><p>Udemy / Mode Analytics — Advanced queries, window functions.</p><span class="cert-status cert-done">✓ Completed</span></div></div>
+      <div class="cert-card fade-in" style="transition-delay:.16s"><div class="cert-icon">📊</div><div class="cert-body"><h4>Microsoft Power BI Desktop</h4><p>Udemy — Dashboards, DAX formulas, data modeling.</p><span class="cert-status cert-done">✓ Completed</span></div></div>
+      <div class="cert-card fade-in" style="transition-delay:.24s"><div class="cert-icon">📈</div><div class="cert-body"><h4>Excel for Data Analysis</h4><p>Google / Coursera — Pivot tables, formulas, statistics.</p><span class="cert-status cert-done">✓ Completed</span></div></div>
+      <div class="cert-card fade-in" style="transition-delay:.32s"><div class="cert-icon">🧠</div><div class="cert-body"><h4>Statistics for Data Science</h4><p>Khan Academy / Coursera — Probability, hypothesis testing.</p><span class="cert-status cert-done">✓ Completed</span></div></div>
+      <div class="cert-card fade-in" style="transition-delay:.4s"><div class="cert-icon">🤖</div><div class="cert-body"><h4>Machine Learning Basics</h4><p>Google / Andrew Ng — Regression, classification, scikit-learn.</p><span class="cert-status cert-wip">⏳ In Progress</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ TESTIMONIALS ═══ -->
+<section id="testimonials" style="background:var(--bg)">
+  <div class="section-inner">
+    <div class="section-label fade-in">06 — Testimonials</div>
+    <h2 class="fade-in">What People <em style="color:var(--accent)">Say</em></h2>
+    <div class="testi-grid">
+      <div class="testi-card fade-in"><div class="testi-stars">★★★★★</div><p class="testi-text">Kajal's analysis was thorough and insightful. She identified patterns we had completely missed and presented findings in a clean, professional dashboard.</p><div class="testi-author"><div class="testi-av">R</div><div><div class="testi-name">Rahul Sharma</div><div class="testi-role">Team Lead — Data Analytics</div></div></div></div>
+      <div class="testi-card fade-in" style="transition-delay:.1s"><div class="testi-stars">★★★★★</div><p class="testi-text">Her ability to transform raw data into clear visual stories is impressive for someone early in their career. Collaborative and always delivers quality work.</p><div class="testi-author"><div class="testi-av">P</div><div><div class="testi-name">Priya Mehta</div><div class="testi-role">Data Scientist — Freelance</div></div></div></div>
+      <div class="testi-card fade-in" style="transition-delay:.2s"><div class="testi-stars">★★★★★</div><p class="testi-text">Kajal's Power BI dashboards are clean and intuitive. She brings both technical skill and creativity to data problems, and always delivers on time.</p><div class="testi-author"><div class="testi-av">A</div><div><div class="testi-name">Amit Verma</div><div class="testi-role">Senior Analyst — Finance</div></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CONTACT ═══ -->
+<section id="contact" style="background:var(--surface)">
+  <div class="section-inner">
+    <div class="section-label fade-in">07 — Contact</div>
+    <h2 class="fade-in">Let's <em style="color:var(--accent)">Connect</em></h2>
+    <div class="contact-grid">
+      <div class="fade-left">
+        <p style="color:var(--muted);line-height:1.85;margin-bottom:2rem;font-size:.95rem">Looking for Data Analyst opportunities — full-time, freelance, or internship. Let's talk!</p>
+        <div class="contact-item">
+          <div class="contact-icon-box">📧</div>
+          <div><div class="contact-lbl">Email</div>
+            <div class="contact-val">
+              <a href="mailto:kajalk1290@gmail.com">kajalk1290@gmail.com</a>
+              <button class="copy-btn" onclick="copyToClipboard('kajalk1290@gmail.com','Email')" title="Copy email">📋</button>
+            </div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon-box">📱</div>
+          <div><div class="contact-lbl">Phone</div>
+            <div class="contact-val">
+              <a href="tel:+917394954559">+91 73949 54559</a>
+              <button class="copy-btn" onclick="copyToClipboard('+917394954559','Phone')" title="Copy number">📋</button>
+            </div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon-box">💼</div>
+          <div><div class="contact-lbl">LinkedIn</div>
+            <div class="contact-val"><a href="https://www.linkedin.com/in/kajaldataanalysis/" target="_blank">linkedin.com/in/kajaldataanalysis</a></div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon-box">🐙</div>
+          <div><div class="contact-lbl">GitHub</div>
+            <div class="contact-val"><a href="https://github.com/kajalk1290" target="_blank">github.com/kajalk1290</a></div>
+          </div>
+        </div>
+        <div class="social-row">
+          <a href="https://www.linkedin.com/in/kajaldataanalysis/" target="_blank" class="soc-link" title="LinkedIn">💼</a>
+          <a href="https://github.com/kajalk1290" target="_blank" class="soc-link" title="GitHub">🐙</a>
+          <a href="mailto:kajalk1290@gmail.com" class="soc-link" title="Email">✉️</a>
+          <a href="tel:+917394954559" class="soc-link" title="Phone">📱</a>
+          <a href="https://www.linkedin.com/in/kajaldataanalysis/" target="_blank" class="soc-link" title="Twitter/X">🐦</a>
+        </div>
+      </div>
+
+      <div class="fade-right" style="transition-delay:.15s">
+        <form id="contactForm" novalidate>
+          <div class="form-row-2">
+            <div class="form-group">
+              <div class="field-wrap">
+                <input type="text" id="fName" placeholder="Your Name" autocomplete="name"/>
+              </div>
+              <div class="field-err" id="fNameErr">Please enter your name.</div>
+            </div>
+            <div class="form-group">
+              <div class="field-wrap">
+                <input type="email" id="fEmail" placeholder="Your Email" autocomplete="email"/>
+              </div>
+              <div class="field-err" id="fEmailErr">Please enter a valid email.</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="field-wrap">
+              <select id="fType">
+                <option value="" disabled selected>Type of Opportunity</option>
+                <option>Full-time Job</option>
+                <option>Internship</option>
+                <option>Freelance Project</option>
+                <option>Collaboration</option>
+                <option>Just saying hi!</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="field-wrap">
+              <input type="text" id="fSubject" placeholder="Subject"/>
+            </div>
+            <div class="field-err" id="fSubjectErr">Please enter a subject.</div>
+          </div>
+          <div class="form-group">
+            <div class="field-wrap" style="position:relative">
+              <textarea id="fMsg" placeholder="Your message — introduce yourself, share an opportunity, or just say hi!" maxlength="1000"></textarea>
+              <span class="char-count" id="charCount">0 / 1000</span>
+            </div>
+            <div class="field-err" id="fMsgErr">Please enter a message (min 20 characters).</div>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;font-size:.88rem;" id="submitBtn">
+            Send Message ✉️
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="nav-logo">k.</div>
+        <p>Aspiring Data Analyst passionate about turning complex data into clear, actionable insights. Open to opportunities across India and remote roles worldwide.</p>
+        <div class="social-row" style="margin-top:0">
+          <a href="https://www.linkedin.com/in/kajaldataanalysis/" target="_blank" class="soc-link">💼</a>
+          <a href="https://github.com/kajalk1290" target="_blank" class="soc-link">🐙</a>
+          <a href="mailto:kajalk1290@gmail.com" class="soc-link">✉️</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="#about">About Me</a></li>
+          <li><a href="#skills">Skills</a></li>
+          <li><a href="#journey">My Journey</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#certifications">Certifications</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Projects</h4>
+        <ul>
+          <li><a href="https://github.com/kajalk1290" target="_blank">✈️ Flight Fare Detection</a></li>
+          <li><a href="https://github.com/kajalk1290/TechSkillsDemandChecker-Project-" target="_blank">🔍 Tech Skill Checker</a></li>
+          <li><a href="https://github.com/kajalk1290/COVID-19-Data-Cleanup-Visualization" target="_blank">🦠 COVID Dashboard</a></li>
+          <li><a href="https://github.com/kajalk1290/Global-COVID-19-Trends-Analysis-Dashboard" target="_blank">🌍 Global COVID Trends</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>Designed &amp; built with ♥ by <span style="color:var(--accent)">Kajal</span> &nbsp;·&nbsp; Data Analyst</p>
+      <p><a href="mailto:kajalk1290@gmail.com">kajalk1290@gmail.com</a> &nbsp;·&nbsp; <a href="tel:+917394954559">+91 73949 54559</a></p>
+    </div>
+  </div>
+</footer>
+
+<!-- ═══ BACK TO TOP ═══ -->
+<button class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<!-- ═══ TOAST CONTAINER ═══ -->
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- ═══ PROJECT MODAL ═══ -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModalOutside(event)">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-label" id="mLabel"></div>
+    <div class="modal-title" id="mTitle"></div>
+    <div class="modal-desc" id="mDesc"></div>
+    <div class="modal-section">
+      <h4>Key Features</h4>
+      <div id="mFeatures"></div>
+    </div>
+    <div class="modal-section">
+      <h4>Tech Stack</h4>
+      <div class="tags" id="mTags"></div>
+    </div>
+    <div class="modal-actions" id="mActions"></div>
+  </div>
+</div>
+
+<script>
+/* ══════════════════════════════════════
+   PARTICLE CANVAS
+══════════════════════════════════════ */
+(function(){
+  const c=document.getElementById('particleCanvas'),ctx=c.getContext('2d');
+  let W,H,particles=[];
+  function resize(){W=c.width=window.innerWidth;H=c.height=window.innerHeight;}
+  resize(); window.addEventListener('resize',resize);
+  function rand(a,b){return Math.random()*(b-a)+a;}
+  for(let i=0;i<55;i++){
+    particles.push({x:rand(0,window.innerWidth),y:rand(0,window.innerHeight),r:rand(.5,1.8),vx:rand(-.25,.25),vy:rand(-.25,.25),o:rand(.15,.45)});
+  }
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    const isDark=document.documentElement.dataset.theme==='dark';
+    particles.forEach(p=>{
+      p.x+=p.vx; p.y+=p.vy;
+      if(p.x<0||p.x>W)p.vx*=-1;
+      if(p.y<0||p.y>H)p.vy*=-1;
+      ctx.beginPath();
+      ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle=isDark?`rgba(232,197,71,${p.o})`:`rgba(201,150,10,${p.o*.5})`;
+      ctx.fill();
+    });
+    // connect nearby particles
+    for(let i=0;i<particles.length;i++){
+      for(let j=i+1;j<particles.length;j++){
+        const dx=particles[i].x-particles[j].x,dy=particles[i].y-particles[j].y;
+        const dist=Math.sqrt(dx*dx+dy*dy);
+        if(dist<120){
+          ctx.beginPath();
+          ctx.moveTo(particles[i].x,particles[i].y);
+          ctx.lineTo(particles[j].x,particles[j].y);
+          const a=(.12*(1-dist/120));
+          ctx.strokeStyle=isDark?`rgba(124,111,255,${a})`:`rgba(91,82,224,${a*.4})`;
+          ctx.lineWidth=.5;
+          ctx.stroke();
+        }
+      }
+    }
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+/* ══════════════════════════════════════
+   SCROLL PROGRESS
+══════════════════════════════════════ */
+window.addEventListener('scroll',()=>{
+  const pct=(scrollY/(document.body.scrollHeight-innerHeight))*100;
+  document.getElementById('scrollBar').style.width=pct+'%';
+});
+
+/* ══════════════════════════════════════
+   NAVBAR SCROLL SHRINK + ACTIVE LINKS
+══════════════════════════════════════ */
+const navbar=document.getElementById('navbar');
+const backTop=document.getElementById('backTop');
+const sections=[...document.querySelectorAll('section[id]')];
+const navLinks=[...document.querySelectorAll('.nav-links a')];
+
+window.addEventListener('scroll',()=>{
+  navbar.classList.toggle('scrolled',scrollY>60);
+  backTop.classList.toggle('show',scrollY>400);
+  let cur='';
+  sections.forEach(s=>{if(scrollY>=s.offsetTop-150)cur=s.id;});
+  navLinks.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+cur));
+});
+
+/* ══════════════════════════════════════
+   HAMBURGER / MOBILE MENU
+══════════════════════════════════════ */
+const ham=document.getElementById('hamburger');
+const mNav=document.getElementById('mobileNav');
+ham.addEventListener('click',()=>{
+  ham.classList.toggle('open');
+  mNav.classList.toggle('open');
+  document.body.style.overflow=mNav.classList.contains('open')?'hidden':'';
+});
+document.querySelectorAll('.mob-link').forEach(a=>a.addEventListener('click',()=>{
+  ham.classList.remove('open');mNav.classList.remove('open');document.body.style.overflow='';
+}));
+
+/* ══════════════════════════════════════
+   THEME TOGGLE
+══════════════════════════════════════ */
+const themeBtn=document.getElementById('themeBtn');
+let isDark=localStorage.getItem('kj_theme')!=='light';
+function applyTheme(){
+  document.documentElement.dataset.theme=isDark?'dark':'light';
+  themeBtn.textContent=isDark?'🌙':'☀️';
+}
+applyTheme();
+themeBtn.addEventListener('click',()=>{isDark=!isDark;localStorage.setItem('kj_theme',isDark?'dark':'light');applyTheme();});
+
+/* ══════════════════════════════════════
+   INTERSECTION OBSERVER (fade + bars + counters)
+══════════════════════════════════════ */
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(!e.isIntersecting)return;
+    e.target.classList.add('visible');
+    e.target.querySelectorAll('.sbar-fill[data-width]').forEach(b=>{
+      setTimeout(()=>{b.style.width=b.dataset.width+'%';},250);
+    });
+    e.target.querySelectorAll('.stat-num[data-count]').forEach(el=>{
+      const tgt=+el.dataset.count,sfx=tgt===100?'%':'+';
+      let cur=0,step=Math.ceil(tgt/45);
+      const iv=setInterval(()=>{cur=Math.min(cur+step,tgt);el.textContent=cur+sfx;if(cur>=tgt)clearInterval(iv);},30);
+    });
+    obs.unobserve(e.target);
+  });
+},{threshold:.1});
+document.querySelectorAll('.fade-in,.fade-left,.fade-right').forEach(el=>obs.observe(el));
+// Stats bar observer
+const sbObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(!e.isIntersecting)return;
+    e.target.querySelectorAll('.stat-num[data-count]').forEach(el=>{
+      const tgt=+el.dataset.count,sfx=tgt===100?'%':'+';
+      let cur=0,step=Math.ceil(tgt/45);
+      const iv=setInterval(()=>{cur=Math.min(cur+step,tgt);el.textContent=cur+sfx;if(cur>=tgt)clearInterval(iv);},30);
+    });
+    sbObs.unobserve(e.target);
+  });
+},{threshold:.3});
+sbObs.observe(document.getElementById('statsBar'));
+
+/* ══════════════════════════════════════
+   TYPEWRITER
+══════════════════════════════════════ */
+const phrases=["Data Analyst","Python Developer","Dashboard Builder","EDA Specialist","Problem Solver"];
+let pi=0,ci=0,del=false;
+const tw=document.getElementById('typeText');
+function typeLoop(){
+  const cur=phrases[pi];
+  if(!del){tw.textContent=cur.slice(0,++ci);if(ci===cur.length){del=true;setTimeout(typeLoop,1800);return;}}
+  else{tw.textContent=cur.slice(0,--ci);if(ci===0){del=false;pi=(pi+1)%phrases.length;}}
+  setTimeout(typeLoop,del?60:100);
+}
+setTimeout(typeLoop,1000);
+
+/* ══════════════════════════════════════
+   PHOTO UPLOAD
+══════════════════════════════════════ */
+document.getElementById('photoInput').addEventListener('change',function(){
+  const f=this.files[0];if(!f)return;
+  if(f.size>5*1024*1024){showToast('⚠️ Photo too large (max 5MB)','warn');return;}
+  const r=new FileReader();
+  r.onload=ev=>{
+    const img=document.getElementById('avatarImg');
+    const lt=document.getElementById('avatarLetter');
+    const hint=document.getElementById('photoHint');
+    img.src=ev.target.result;img.style.display='block';lt.style.display='none';
+    hint.textContent='📷 Click to change photo';
+    try{localStorage.setItem('kj_photo',ev.target.result);}catch(e){}
+    showToast('✅ Profile photo updated!','success');
+  };
+  r.readAsDataURL(f);
+});
+// Restore saved photo
+(()=>{try{const s=localStorage.getItem('kj_photo');if(s){document.getElementById('avatarImg').src=s;document.getElementById('avatarImg').style.display='block';document.getElementById('avatarLetter').style.display='none';document.getElementById('photoHint').textContent='📷 Click to change photo';}}catch(e){}})();
+
+/* ══════════════════════════════════════
+   PROJECT FILTER
+══════════════════════════════════════ */
+document.querySelectorAll('.filter-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    const f=btn.dataset.filter;
+    const grid=document.getElementById('projectsGrid');
+    const cards=[...grid.querySelectorAll('.proj-card')];
+    // Reset grid to normal flow
+    grid.style.position='relative';
+    let visible=[];
+    cards.forEach(card=>{
+      const match=f==='all'||card.dataset.cat===f;
+      if(match){card.removeAttribute('data-hidden');visible.push(card);}
+      else{card.setAttribute('data-hidden','');}
+    });
+    // Animate
+    visible.forEach((card,i)=>{card.style.transitionDelay=i*.06+'s';});
+    setTimeout(()=>visible.forEach(card=>card.style.transitionDelay=''),600);
+  });
+});
+
+/* ══════════════════════════════════════
+   PROJECT MODAL
+══════════════════════════════════════ */
+function openModal(card){
+  document.getElementById('mLabel').textContent=card.querySelector('.proj-num').textContent;
+  document.getElementById('mTitle').textContent=card.dataset.title;
+  document.getElementById('mDesc').textContent=card.dataset.desc;
+  const featDiv=document.getElementById('mFeatures');
+  featDiv.innerHTML=['f1','f2','f3','f4'].map(k=>card.dataset[k]?`<div class="modal-feature">${card.dataset[k]}</div>`:'').join('');
+  const tagsDiv=document.getElementById('mTags');
+  tagsDiv.innerHTML=(card.dataset.tags||'').split(',').map(t=>`<span class="tag tag-p">${t.trim()}</span>`).join('');
+  document.getElementById('mActions').innerHTML=
+    `<a href="${card.dataset.github}" target="_blank" class="btn btn-primary btn-sm">View on GitHub →</a>
+     <button class="btn btn-ghost btn-sm" onclick="closeModal()">Close</button>`;
+  document.getElementById('modalOverlay').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeModal(){document.getElementById('modalOverlay').classList.remove('open');document.body.style.overflow='';}
+function closeModalOutside(e){if(e.target===document.getElementById('modalOverlay'))closeModal();}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
+
+/* ══════════════════════════════════════
+   TOAST SYSTEM
+══════════════════════════════════════ */
+function showToast(msg,type='success',dur=3500){
+  const tc=document.getElementById('toastContainer');
+  const t=document.createElement('div');
+  t.className=`toast toast-${type}`;
+  t.textContent=msg;
+  tc.appendChild(t);
+  requestAnimationFrame(()=>requestAnimationFrame(()=>t.classList.add('show')));
+  setTimeout(()=>{t.classList.remove('show');setTimeout(()=>t.remove(),450);},dur);
+}
+
+/* ══════════════════════════════════════
+   COPY TO CLIPBOARD
+══════════════════════════════════════ */
+function copyToClipboard(text,label){
+  navigator.clipboard.writeText(text).then(()=>{
+    showToast(`📋 ${label} copied!`,'info');
+  }).catch(()=>{
+    // fallback
+    const ta=document.createElement('textarea');
+    ta.value=text;document.body.appendChild(ta);ta.select();document.execCommand('copy');ta.remove();
+    showToast(`📋 ${label} copied!`,'info');
+  });
+}
+
+/* ══════════════════════════════════════
+   CONTACT FORM — VALIDATION + MAILTO
+══════════════════════════════════════ */
+const fMsg=document.getElementById('fMsg');
+fMsg.addEventListener('input',()=>{
+  document.getElementById('charCount').textContent=fMsg.value.length+' / 1000';
+});
+
+function showErr(id,show){
+  const el=document.getElementById(id);
+  el.classList.toggle('show',show);
+}
+function validateField(el,errId,condition){
+  const ok=condition(el.value.trim());
+  el.classList.toggle('error',!ok);
+  el.classList.toggle('ok',ok&&el.value.trim().length>0);
+  showErr(errId,!ok&&el.value.trim().length>0);
+  return ok;
+}
+
+// Live validation
+document.getElementById('fName').addEventListener('blur',function(){
+  validateField(this,'fNameErr',v=>v.length>=2);
+});
+document.getElementById('fEmail').addEventListener('blur',function(){
+  validateField(this,'fEmailErr',v=>/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v));
+});
+document.getElementById('fSubject').addEventListener('blur',function(){
+  validateField(this,'fSubjectErr',v=>v.length>=3);
+});
+document.getElementById('fMsg').addEventListener('blur',function(){
+  validateField(this,'fMsgErr',v=>v.length>=20);
+});
+
+document.getElementById('contactForm').addEventListener('submit',function(e){
+  e.preventDefault();
+  const name=document.getElementById('fName');
+  const email=document.getElementById('fEmail');
+  const subject=document.getElementById('fSubject');
+  const msg=fMsg;
+  const type=document.getElementById('fType').value;
+
+  let valid=true;
+  if(!validateField(name,'fNameErr',v=>v.length>=2)){valid=false;showErr('fNameErr',true);}
+  if(!validateField(email,'fEmailErr',v=>/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v))){valid=false;showErr('fEmailErr',true);}
+  if(!validateField(subject,'fSubjectErr',v=>v.length>=3)){valid=false;showErr('fSubjectErr',true);}
+  if(!validateField(msg,'fMsgErr',v=>v.length>=20)){valid=false;showErr('fMsgErr',true);}
+
+  if(!valid){showToast('⚠️ Please fix the form errors','warn');return;}
+
+  const btn=document.getElementById('submitBtn');
+  btn.textContent='Sending...';btn.disabled=true;
+
+  // Build mailto
+  const body=`Hi Kajal,\n\nOpportunity Type: ${type||'Not specified'}\n\n${msg.value}\n\nBest,\n${name.value}`;
+  const mailTo=`mailto:kajalk1290@gmail.com?subject=${encodeURIComponent(subject.value)}&body=${encodeURIComponent(body)}`;
+  window.location.href=mailTo;
+
+  setTimeout(()=>{
+    btn.textContent='Send Message ✉️';btn.disabled=false;
+    showToast('✅ Email client opened! Message ready to send.','success',4500);
+    this.reset();
+    document.getElementById('charCount').textContent='0 / 1000';
+    document.querySelectorAll('#contactForm input,#contactForm textarea').forEach(el=>{el.classList.remove('ok','error');});
+  },1200);
+});
+
+/* ══════════════════════════════════════
+   RESUME DOWNLOAD
+══════════════════════════════════════ */
+function downloadResume(){
+  // Creates a simple professional resume text file
+  const content=`KAJAL
+Data Analyst
+========================
+📧 kajalk1290@gmail.com  |  📱 +91 73949 54559
+💼 linkedin.com/in/kajaldataanalysis  |  🐙 github.com/kajalk1290
+
+OBJECTIVE
+---------
+Aspiring Data Analyst with hands-on project experience in data
+analysis and visualization. Skilled in Python, SQL, Excel, and
+Power BI. Seeking opportunities to apply analytical skills and
+contribute to data-driven decision making.
+
+SKILLS
+------
+• Python (Pandas, NumPy, Matplotlib, Seaborn, Scikit-learn)
+• SQL / MySQL — Joins, Aggregations, Window Functions
+• Excel — Pivot Tables, Advanced Formulas, Data Cleaning
+• Power BI — Interactive Dashboards, DAX, Data Modeling
+• Data Analysis — EDA, Statistics, Forecasting, Cleaning
+• Machine Learning — Linear Regression, Classification (Basic)
+
+PROJECTS
+--------
+1. Flight Fare Detection & Analysis
+   - Analyzed flight pricing patterns to detect fare trends
+   - Built regression models for fare prediction
+   - Tools: Python, Pandas, Seaborn, EDA, Regression
+
+2. Tech Skill Demand Checker
+   - Scraped and analyzed job market data for in-demand skills
+   - Tools: Python, Pandas, BeautifulSoup, Web Scraping
+
+3. COVID-19 Data Analysis & Interactive Dashboard
+   - Built interactive Plotly dashboards for pandemic data
+   - Tools: Plotly, Matplotlib, Pandas, EDA
+
+4. COVID-19 Global Trends & Country Analysis
+   - Analyzed 150+ countries COVID data with geospatial maps
+   - Tools: Python, Seaborn, Plotly, Statistics
+
+CERTIFICATIONS
+--------------
+• Python for Data Science & AI (Coursera / IBM)
+• SQL for Data Analysis (Udemy)
+• Microsoft Power BI Desktop (Udemy)
+• Excel for Data Analysis (Google / Coursera)
+• Statistics for Data Science (Khan Academy / Coursera)
+• Machine Learning Basics (Google / Andrew Ng) — In Progress
+
+EDUCATION
+---------
+Bachelor's in Computer Science
+2020 – 2023 | India
+`;
+  const blob=new Blob([content],{type:'text/plain'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;a.download='Kajal_DataAnalyst_Resume.txt';
+  a.click();URL.revokeObjectURL(url);
+  showToast('📄 Resume downloaded!','success');
+}
+</script>
+</body>
+</html>
