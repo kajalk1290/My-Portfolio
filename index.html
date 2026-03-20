@@ -1174,70 +1174,96 @@ document.getElementById('contactForm').addEventListener('submit',function(e){
 /* ══════════════════════════════════════
    RESUME DOWNLOAD
 ══════════════════════════════════════ */
-function downloadResume(){
-  // Creates a simple professional resume text file
+function openResume(){
+  document.getElementById('resumeModal').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeResume(){
+  document.getElementById('resumeModal').classList.remove('open');
+  document.body.style.overflow='';
+}
+function closeResumeOutside(e){if(e.target===document.getElementById('resumeModal'))closeResume();}
+ 
+function downloadResumeText(){
   const content=`KAJAL
-Data Analyst
-========================
+Data Analyst | AI Programming Assistant
+===============================================
 📧 kajalk1290@gmail.com  |  📱 +91 73949 54559
 💼 linkedin.com/in/kajaldataanalysis  |  🐙 github.com/kajalk1290
-
+📍 Kanpur, India
+ 
 OBJECTIVE
 ---------
-Aspiring Data Analyst with hands-on project experience in data
-analysis and visualization. Skilled in Python, SQL, Excel, and
-Power BI. Seeking opportunities to apply analytical skills and
+Aspiring Data Analyst with hands-on project experience in data analysis and
+visualization. Skilled in Python, SQL, Excel, and Power BI. Passionate about
+identifying patterns in complex datasets and transforming them into clear,
+actionable insights. Seeking opportunities to apply analytical skills and
 contribute to data-driven decision making.
-
-SKILLS
-------
-• Python (Pandas, NumPy, Matplotlib, Seaborn, Scikit-learn)
-• SQL / MySQL — Joins, Aggregations, Window Functions
-• Excel — Pivot Tables, Advanced Formulas, Data Cleaning
-• Power BI — Interactive Dashboards, DAX, Data Modeling
-• Data Analysis — EDA, Statistics, Forecasting, Cleaning
-• Machine Learning — Linear Regression, Classification (Basic)
-
-PROJECTS
---------
-1. Flight Fare Detection & Analysis
-   - Analyzed flight pricing patterns to detect fare trends
-   - Built regression models for fare prediction
-   - Tools: Python, Pandas, Seaborn, EDA, Regression
-
-2. Tech Skill Demand Checker
-   - Scraped and analyzed job market data for in-demand skills
-   - Tools: Python, Pandas, BeautifulSoup, Web Scraping
-
-3. COVID-19 Data Analysis & Interactive Dashboard
-   - Built interactive Plotly dashboards for pandemic data
-   - Tools: Plotly, Matplotlib, Pandas, EDA
-
-4. COVID-19 Global Trends & Country Analysis
-   - Analyzed 150+ countries COVID data with geospatial maps
-   - Tools: Python, Seaborn, Plotly, Statistics
-
-CERTIFICATIONS
---------------
-• Python for Data Science & AI (Coursera / IBM)
-• SQL for Data Analysis (Udemy)
-• Microsoft Power BI Desktop (Udemy)
-• Excel for Data Analysis (Google / Coursera)
-• Statistics for Data Science (Khan Academy / Coursera)
-• Machine Learning Basics (Google / Andrew Ng) — In Progress
-
+ 
+TECHNICAL SKILLS
+----------------
+Programming  : Python, Pandas, NumPy, Scikit-learn, Jupyter
+Visualization: Matplotlib, Seaborn, Plotly, Power BI, Tableau
+Databases    : SQL, MySQL, Excel, Git, GitHub
+Analytics    : EDA, Statistics, Forecasting, Data Cleaning, Trends
+ML           : Regression, Classification, Feature Engineering
+ 
 EDUCATION
 ---------
-Bachelor's in Computer Science
-2020 – 2023 | India
+2025–2026 | AI Programming Assistant Course — NSTI Kanpur
+  • Python (basic to advanced), Machine Learning fundamentals
+  • Deep Learning basics, Data Analysis, Visualization, APIs & Automation
+ 
+2023–2025 | Master's Degree in Economics (M.A.) — Kanpur University
+  • Market behavior, economic theories, monetary & fiscal policy, research skills
+ 
+2020–2023 | Bachelor's Degree in Economics & Political Science (B.A.) — Kanpur University
+  • Economics, political science, government policies, research methodology
+ 
+PROJECTS
+--------
+1. ✈️ Flight Fare Detection & Analysis
+   Tools: Python, Pandas, Seaborn, EDA, Regression
+   - Analyzed flight pricing patterns; built regression models (~82% accuracy)
+   - Created interactive visualizations for price trends by airline, route & time
+   GitHub: https://github.com/kajalk1290/flight-fare-detection
+ 
+2. 🔍 Tech Skill Demand Checker
+   Tools: Python, Pandas, BeautifulSoup, Web Scraping, Matplotlib
+   - Scraped & analyzed job market data to identify in-demand technical skills
+   GitHub: https://github.com/kajalk1290/TechSkillsDemandChecker-Project-
+ 
+3. 🦠 COVID-19 Data Analysis & Dashboard
+   Tools: Plotly, Matplotlib, Pandas, EDA, Statistics
+   - Built interactive Plotly dashboards with time-series and case distribution
+   GitHub: https://github.com/kajalk1290/COVID-19-Data-Cleanup-Visualization
+ 
+4. 🌍 Global COVID-19 Trends Analysis
+   Tools: Python, Seaborn, Plotly, Statistics, Geospatial
+   - Analyzed 150+ countries' data with choropleth maps
+   GitHub: https://github.com/kajalk1290/Global-COVID-19-Trends-Analysis-Dashboard
+ 
+CERTIFICATIONS
+--------------
+✓ Python for Data Science & AI (Coursera / IBM)
+✓ SQL for Data Analysis (Udemy)
+✓ Microsoft Power BI Desktop (Udemy)
+✓ Excel for Data Analysis (Google / Coursera)
+✓ Statistics for Data Science (Khan Academy)
+⏳ Machine Learning Basics — In Progress (Andrew Ng)
+ 
+LANGUAGES
+---------
+Hindi — Native  |  English — Proficient
+ 
+AVAILABILITY
+------------
+Open to Full-Time, Internship, and Freelance opportunities.
 `;
   const blob=new Blob([content],{type:'text/plain'});
   const url=URL.createObjectURL(blob);
   const a=document.createElement('a');
-  a.href=url;a.download='Kajal_DataAnalyst_Resume.txt';
-  a.click();URL.revokeObjectURL(url);
-  showToast('📄 Resume downloaded!','success');
+  a.href=url; a.download='Kajal_Resume.txt'; a.click();
+  URL.revokeObjectURL(url);
+  showToast('⬇ Resume downloaded!','success');
 }
-</script>
-</body>
-</html>
